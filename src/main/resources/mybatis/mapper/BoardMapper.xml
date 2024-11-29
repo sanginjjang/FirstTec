@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.testWeb.dao.IBoardDao">
+	<insert id="insert">
+		INSERT INTO tbl_board (title, content, writer, filename, regdate) 
+		VALUES (#{board.title}, #{board.content}, #{board.writer}, #{board.filename}, NOW());
+	</insert>
+	<select id="findAll" resultType="com.example.testWeb.dto.BoardDto">
+		select * from tbl_board
+	</select>
+	<select id="findByBno" resultType="com.example.testWeb.dto.BoardDto">
+		select * from tbl_board where bno = #{bno};
+	</select>
+	<update id="update">
+		update tbl_board
+		<set>
+			<if test="board.title != ''">
+				title = #{board.title},
+			</if>
+			<if test="board.content != ''">
+				content = #{board.content},
+			</if>
+			<if test="board.filename != ''">
+				filename = #{board.filename},
+			</if>
+			modifydate = now()
+		</set>
+		where bno = #{board.bno};
+	</update>
+	<delete id="delete">
+		delete from tbl_board where bno = #{bno}
+	</delete>
+	<select id="findAllWithPaging" resultType="com.example.testWeb.dto.BoardDto">
+		SELECT * FROM tbl_board LIMIT #{startNum}, #{amount}
+	</select>
+	<select id="findCount" resultType="_int">
+		SELECT COUNT(*) FROM tbl_board;
+	</select>
+</mapper>
