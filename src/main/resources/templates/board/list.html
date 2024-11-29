@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>ListPage</h1>
+<hr>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>writer</th>
+				<th>content</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr th:each="list, iterStat : ${boardlist}">
+			    <td th:text="${iterStat.index + 1}"></td> <!-- status.count에 해당 -->
+			    <td th:text="${list.title}"></td>
+			    <td><a th:href="@{/board/detail/{bno}(bno=${list.bno})}" th:text="${list.writer}"></a></td>
+			</tr>
+
+		</tbody>
+	</table>
+</body>
+</html>
